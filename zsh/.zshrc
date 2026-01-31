@@ -110,13 +110,6 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-alias pip=pip3
-alias python=python3
-
-alias ls="eza --icons=always"
-eval "$(zoxide init zsh)"
-alias cd="z"
-
 # MACOS SPECIFICS - START ----------------------
 if [[ "$OSTYPE" == darwin* ]]; then
     source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
@@ -130,7 +123,32 @@ if [[ "$OSTYPE" == darwin* ]]; then
 fi
 # MACOS SPECIFICS - END ------------------------
 
+# LINUX SPECIFICS - START -----------------
+if [[ "$OSTYPE" == linux* ]]; then
+    alias nvim="bob run stable"         # Bob to manage nvim versions
+
+    # ROS SHIT
+    source /opt/ros/humble/setup.zsh                  # Add ROS as source
+    export ROS_DOMAIN_ID=1                            # Based on ROS Documentation  
+    source /usr/share/colcon_cd/function/colcon_cd.sh # ROS Package build
+    export _colcon_cd_root=/opt/ros/humble/
+
+    export PATH="/home/ner0/.local/bin:$PATH"
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
+# LINUX SPECIFICS - END   -----------------
+
+alias pip=pip3
+alias python=python3
+
+eval "$(zoxide init zsh)"
+alias cd="z"
+alias ls="eza --icons=always"
+
 # Useful Commands :3
+
+# <name> untar          -> Extracts into <name> directory
+# <name> untar dir_name -> Extracts into dir_name directory
 untar() {
   if [[ -z "$1" ]]; then
     echo "Usage: untar <archive.tar[.gz|.bz2|.xz]> [target_folder]"
@@ -148,5 +166,22 @@ untar() {
 
   mkdir -p "$target" || return 1
   tar -xvf "$archive" -C "$target"
+}
+
+# tree <level>      -> Generates a tree of depth <level>
+# tree <path> <level> -> Generates a tree of depth <level> for <path>
+tree() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: tree <LEVEL>"
+    return 1
+  fi
+
+  if [[ $# -eq 1 ]]; then
+    eza --icons=always --tree --level="$1"
+    return 1;
+  elif [[ $# -eq 2 ]]; then 
+    eza "$1" --icons=always --tree --level="$2"
+    return 1;
+  fi
 }
 
