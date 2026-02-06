@@ -21,64 +21,22 @@ config.cursor_blink_ease_out = "Constant"
 
 -- Shortcuts
 config.keys = {
-	-- This will create a new split and run the `top` program inside it
-	{
-		key = "h",
-		mods = "CTRL|SHIFT",
-		action = act.SplitPane({
-			direction = "Left",
-			size = { Percent = 50 },
-		}),
-	},
-	{
-		key = "l",
-		mods = "CTRL|SHIFT",
-		action = act.SplitPane({
-			direction = "Right",
-			size = { Percent = 50 },
-		}),
-	},
-	{
-		key = "k",
-		mods = "CTRL|SHIFT",
-		action = act.SplitPane({
-			direction = "Up",
-			size = { Percent = 50 },
-		}),
-	},
-	{
-		key = "j",
-		mods = "CTRL|SHIFT",
-		action = act.SplitPane({
-			direction = "Down",
-			size = { Percent = 50 },
-		}),
-	},
-	{
-		key = "h",
-		mods = "ALT",
-		action = act.ActivatePaneDirection("Left"),
-	},
-	{
-		key = "l",
-		mods = "ALT",
-		action = act.ActivatePaneDirection("Right"),
-	},
-	{
-		key = "k",
-		mods = "ALT",
-		action = act.ActivatePaneDirection("Up"),
-	},
-	{
-		key = "j",
-		mods = "ALT",
-		action = act.ActivatePaneDirection("Down"),
-	},
-	{
-		key = "w",
-		mods = "CTRL|SHIFT",
-		action = act.CloseCurrentPane({ confirm = true }),
-	},
+	-- Split create panes
+	{ key = "h", mods = "CTRL|SHIFT", action = act.SplitPane({ direction = "Left", size = { Percent = 50 } }) },
+	{ key = "l", mods = "CTRL|SHIFT", action = act.SplitPane({ direction = "Right", size = { Percent = 50 } }) },
+	{ key = "k", mods = "CTRL|SHIFT", action = act.SplitPane({ direction = "Up", size = { Percent = 50 } }) },
+	{ key = "j", mods = "CTRL|SHIFT", action = act.SplitPane({ direction = "Down", size = { Percent = 50 } }) },
+
+	-- Delete split panes (or the window)
+	{ key = "w", mods = "CTRL|SHIFT", action = act.CloseCurrentPane({ confirm = true }) },
+
+	-- Change focus
+	{ key = "h", mods = "ALT", action = act.ActivatePaneDirection("Left") },
+	{ key = "l", mods = "ALT", action = act.ActivatePaneDirection("Right") },
+	{ key = "k", mods = "ALT", action = act.ActivatePaneDirection("Up") },
+	{ key = "j", mods = "ALT", action = act.ActivatePaneDirection("Down") },
+
+	-- Move tabs around
 	{ key = "{", mods = "SHIFT|ALT", action = act.MoveTabRelative(-1) },
 	{ key = "}", mods = "SHIFT|ALT", action = act.MoveTabRelative(1) },
 }
