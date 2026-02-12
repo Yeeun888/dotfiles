@@ -125,8 +125,6 @@ fi
 
 # LINUX SPECIFICS - START -----------------
 if [[ "$OSTYPE" == linux* ]]; then
-    alias nvim="bob run stable"         # Bob to manage nvim versions
-
     # ROS SHIT
     source /opt/ros/humble/setup.zsh                  # Add ROS as source
     export ROS_DOMAIN_ID=1                            # Based on ROS Documentation  
@@ -137,6 +135,8 @@ if [[ "$OSTYPE" == linux* ]]; then
     export PATH="$HOME/.cargo/bin:$PATH"
 fi
 # LINUX SPECIFICS - END   -----------------
+
+alias nvim="bob run stable"         # Bob to manage nvim versions
 
 alias pip=pip3
 alias python=python3
