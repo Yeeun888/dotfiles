@@ -1,0 +1,7 @@
+// lua_ls roots at ~/dotfiles (due to .git) instead of ~/.config/nvim,
+// so diagnostics.globals set via on_init isn't respected.
+// This file is read directly from the project root and always applies.
+{
+  "runtime.version": "LuaJIT",
+  "diagnostics.globals": ["vim"]
+}
