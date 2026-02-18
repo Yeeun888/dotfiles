@@ -103,6 +103,9 @@ vim.keymap.set("n", "<leader>bd", function()
 end, { desc = "Go to prev buffer and delete buffer" })
 
 vim.keymap.set("n", "<leader>ow", "<cmd>edit ~/.wezterm.lua<CR>", { desc = "[O]pen [W]ezterm config" })
+vim.keymap.set("n", "<leader>on", function()
+	builtin.find_files({ cwd = vim.fn.stdpath("config") })
+end, { desc = "[O]pen [N]eovim files" })
 
 -- AUTO COMMANDS
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -251,7 +254,12 @@ require("lazy").setup({
 
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
+			{
+				"rcarriga/nvim-notify",
+				opts = {
+					stages = "static",
+				},
+			},
 		},
 	},
 
@@ -408,10 +416,9 @@ require("lazy").setup({
 				})
 			end, { desc = "[S]earch [/] in Open Files" })
 
-			-- Shortcut for searching your Neovim configuration files
 			vim.keymap.set("n", "<leader>sn", function()
-				builtin.find_files({ cwd = vim.fn.stdpath("config") })
-			end, { desc = "[S]earch [N]eovim files" })
+				require("telescope").extensions.notify.notify()
+			end, { desc = "[S]earch [N]otifications" })
 
 			vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "[S]earch [B]uffers" })
 		end,

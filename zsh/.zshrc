@@ -190,3 +190,50 @@ tree() {
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Enable timestamps in history (required for relative time display in Ctrl+R)
+# INC_APPEND_HISTORY_TIME writes after command finishes for accurate timestamps
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY_TIME
+
+# fzf shell integration (Ctrl+R for history, Ctrl+T for files, Alt+C for cd)
+source <(fzf --zsh)
+
+# Override fzf history widget to show relative time instead of entry numbers
+fzf-history-widget() {
+  local selected
+  setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
+  selected=$(fc -rl -t '%s' 1 2>/dev/null | awk -v now="$(date +%s)" -v tz="$(date +%z)" '
+    BEGIN {
+      sign   = (substr(tz,1,1) == "-") ? -1 : 1
+      tz_off = sign * (substr(tz,2,2)*3600 + substr(tz,4,2)*60)
+    }
+    {
+      num = $1; epoch = $2
+      cmd = $0; sub(/^ *[0-9]+ +[0-9]+ +/, "", cmd)
+      if (seen[cmd]++) next
+      diff = now - epoch
+      if (epoch == 0) {
+        ago = "?"
+      } else if (diff < 0) {
+        ago = "+" int(-diff/86400) "d"
+      } else if (diff < 72000) {
+        loc = epoch + tz_off
+        h   = int(loc % 86400 / 3600)
+        m   = int(loc % 3600  / 60)
+        ago = sprintf("%02d:%02d", h, m)
+      } else {
+        ago = int(diff/86400) "d"
+      }
+      printf "%s\t%-8s%s\n", num, ago, cmd
+    }
+  ' | FZF_DEFAULT_OPTS=$(__fzf_defaults "" "--scheme=history --bind=ctrl-r:toggle-sort --wrap-sign '\t↳ ' --highlight-line ${FZF_CTRL_R_OPTS-} --query=${(qqq)LBUFFER} +m") fzf --delimiter=$'\t' --with-nth=2 --nth=2)
+  local ret=$?
+  if [[ -n "$selected" ]]; then
+    local num
+    num=$(cut -f1 <<< "$selected")
+    [[ -n "$num" ]] && zle vi-fetch-history -n "$num"
+  fi
+  zle reset-prompt
+  return $ret
+}
