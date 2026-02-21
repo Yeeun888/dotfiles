@@ -197,6 +197,8 @@ setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY_TIME
 
 # fzf shell integration (Ctrl+R for history, Ctrl+T for files, Alt+C for cd)
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source <(fzf --zsh)
 
 # Override fzf history widget to show relative time instead of entry numbers
