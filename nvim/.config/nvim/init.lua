@@ -504,15 +504,20 @@ require("lazy").setup({
 				clangd = {},
 				gopls = {},
 				pyright = {},
+				ts_ls = {},
 			}
 
 			-- Ensure the servers and tools above are installed with mason (:mason)
-			local ensure_installed = vim.tbl_keys(servers or {})
-			vim.list_extend(ensure_installed, {
+			-- NOTE: Mason package names (kebab-case) differ from vim.lsp server names (snake_case)
+			-- wtf claude code fix btw gg
+			local ensure_installed = {
 				"lua-language-server",
 				"stylua",
 				"clangd",
-			})
+				"gopls",
+				"pyright",
+				"typescript-language-server",
+			}
 
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -675,6 +680,13 @@ require("lazy").setup({
 			-- Shows a signature help window while you type arguments for a function
 			signature = { enabled = true },
 		},
+	},
+
+	-- For rust only
+	{
+		"mrcjkb/rustaceanvim",
+		version = "^8", -- Recommended
+		lazy = false, -- This plugin is already lazy
 	},
 
 	-- Theme for neovim

@@ -137,7 +137,7 @@ if [[ "$OSTYPE" == linux* ]]; then
 fi
 # LINUX SPECIFICS - END   -----------------
 
-alias nvim="bob run v0.11.0"
+alias nvim="bob run v0.11.6"
 
 alias pip=pip3
 alias python=python3
