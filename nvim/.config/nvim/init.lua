@@ -702,6 +702,18 @@ require("lazy").setup({
 		end,
 	},
 
+	-- Extra theme for light mode
+	{
+		"yorik1984/newpaper.nvim",
+		config = function()
+			require("lazy").setup({
+				"yorik1984/newpaper.nvim",
+				priority = 1000,
+				config = true,
+			})
+		end,
+	},
+
 	-- Highlight todo, notes, etc in comments
 	{
 		"folke/todo-comments.nvim",
