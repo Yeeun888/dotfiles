@@ -197,3 +197,6 @@ setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY_TIME
 
 unsetopt share_history
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk@25/bin:$PATH"

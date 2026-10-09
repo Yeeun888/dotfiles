@@ -435,6 +435,9 @@ require("lazy").setup({
 			{ "mason-org/mason.nvim", opts = {} },
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 
+			-- For Astro files
+			{ "AstroNvim/astrolsp", opts = {} },
+
 			-- Useful status updates for LSP.
 			{ "j-hui/fidget.nvim", opts = {} },
 
@@ -517,6 +520,7 @@ require("lazy").setup({
 				"gopls",
 				"pyright",
 				"typescript-language-server",
+				"astro-language-server",
 			}
 
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
@@ -805,6 +809,11 @@ require("lazy").setup({
 		event = "InsertEnter",
 		config = true,
 		opts = {},
+	},
+
+	-- Kitty terminal addiitons
+	{
+		"knubie/vim-kitty-navigator",
 	},
 
 	-- Trouble and LSP diagnostics

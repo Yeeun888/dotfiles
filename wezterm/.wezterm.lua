@@ -11,6 +11,7 @@ config.initial_rows = 28
 config.font_size = 14
 config.color_scheme = "Monokai Pro (Gogh)"
 config.font = wezterm.font("JetBrainsMono Nerd Font")
+-- config.font = wezterm.font("Monocraft")
 config.window_background_opacity = 0.95
 
 -- Cursor
